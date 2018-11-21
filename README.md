@@ -1,4 +1,4 @@
-# range
+# range [a,b)
 Range template library for C++17
 
 ## Purpose
