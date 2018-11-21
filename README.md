@@ -15,7 +15,7 @@ Stepping will be done towards the `stop-value` using the same technique as above
 ### `range(<start-value>, <stop-value>, <step-value>)`
 Stepping will be done using `<step-value>`.
 
-The values don't need to be of the same type as long as they can be compared/used for stepping. 
+The values don't need to be of the same type as long as they can be compared/used for stepping. If `range` is used to hi-jack iterators, `start-value` (example: `begin()`), `stop-value` (example: `end()`) and `step-value` (example: `unsigned`) may very well be three different types.
 
 ## Example
 ```c++
@@ -24,6 +24,7 @@ The values don't need to be of the same type as long as they can be compared/use
 
 #include "range.hpp"
 using namespace lyn;
+
 
 template <typename T>
 void ranger(T& r) {
@@ -34,12 +35,12 @@ void ranger(T& r) {
 
 int main() {
     std::cout << "integral range: ";
-    for(const auto& v : range(10))
+    for(auto v : range(10))
         std::cout << v << " ";
     std::cout << "\n";
 
     std::cout << "negative integral range: ";
-    for(const auto& v : range(-10))
+    for(auto v : range(-10))
         std::cout << v << " ";
     std::cout << "\n";
 

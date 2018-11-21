@@ -14,12 +14,12 @@ void ranger(T& r) {
 
 int main() {
     std::cout << "integral range: ";
-    for(const auto& v : range(10))
+    for(auto v : range(10))
         std::cout << v << " ";
     std::cout << "\n";
 
     std::cout << "negative integral range: ";
-    for(const auto& v : range(-10))
+    for(auto v : range(-10))
         std::cout << v << " ";
     std::cout << "\n";
 
