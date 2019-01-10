@@ -22,25 +22,36 @@ namespace lyn {
         range(const T& start, const U& stop) : range(start, stop, stop<start ? backward() : forward()) {}
         range(const T& stop) : range(T(), stop) {}
 
-        struct iterator {
-            using difference_type = V;
+        class iterator : public std::iterator<std::forward_iterator_tag, T> {
+        public:
+            using iterator_category = std::forward_iterator_tag;
             using value_type = std::remove_cv_t<T>;
+            using difference_type = V;
             using pointer = T*;
             using reference = T&;
-            using iterator_category = std::input_iterator_tag;
+        private:
             T m_val;
             V m_step;
-            bool (*const m_ltgt)(T, T);
+            bool (*m_ltgt)(T, T);
+        public:
             iterator() : m_val(), m_step(), m_ltgt(nullptr) {}
             iterator(T val) : m_val(val), m_step(), m_ltgt(nullptr) {}
             iterator(T val, V step, bool (*const ltgt)(T,T)) :
                 m_val(val), m_step(step), m_ltgt(ltgt)
             {}
+            iterator& operator=(const iterator& rhs) {
+                m_val = rhs.m_val;
+                m_step = rhs.m_step;
+                m_ltgt = rhs.m_ltgt;
+                return *this;
+            }
             inline iterator& operator++() { m_val += m_step; return *this; }
             inline iterator operator++(int) { auto cp=m_val; m_val += m_step; return cp; }
 
             inline const T& operator*() const { return m_val; }
             inline const T* operator&() const { return &m_val; }
+            inline reference operator*() { return m_val; }
+            inline pointer operator&() { return &m_val; }
 
             inline bool operator!=(const iterator& rhs) const { return m_ltgt(m_val, rhs.m_val); }
             inline bool operator==(const iterator& rhs) const { return !(*this!=rhs); }
@@ -49,8 +60,11 @@ namespace lyn {
         };
 
         const iterator begin() const { return iterator(m_start, m_step, m_ltgt); }
-        //const iterator end() const { return iterator{m_stop}; }
-        const U& end() const { return m_stop; }
+        #ifdef _WIN32
+        const iterator end() const { return iterator{m_stop}; }
+        #else
+        const U& end() const { return m_stop; } // prefered but does not compile with msvc
+        #endif
     };
 }
 
