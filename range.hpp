@@ -22,7 +22,7 @@ namespace lyn {
         range(const T& start, const U& stop) : range(start, stop, stop<start ? backward() : forward()) {}
         range(const T& stop) : range(T(), stop) {}
 
-        class iterator : public std::iterator<std::forward_iterator_tag, T> {
+        class iterator { // : public std::iterator<std::forward_iterator_tag, T> {
         public:
             using iterator_category = std::forward_iterator_tag;
             using value_type = std::remove_cv_t<T>;
