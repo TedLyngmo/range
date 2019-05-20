@@ -16,7 +16,13 @@ namespace lyn {
         bool (*const m_ltgt)(T, T);
     public:
         range(const T& start, const U& stop, const V& step) : m_start(start), m_stop(stop), m_step(step),
-            m_ltgt(T()<(T()+m_step) ? [](T l, T r){ return l<r; } : [](T l, T r){ return r<l; })
+            m_ltgt(T()<(T()+m_step) ? [](T l, T r){
+                    if constexpr (std::is_floating_point_v<T>) return l<=r;
+                    else return l<r;
+                } : [](T l, T r){
+                    if constexpr (std::is_floating_point_v<T>) return r<=l;
+                    else return r<l;
+                })
         {}
 
         range(const T& start, const U& stop) : range(start, stop, stop<start ? backward() : forward()) {}

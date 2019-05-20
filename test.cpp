@@ -21,7 +21,7 @@ int main() {
     std::cout << "\n";
 
     std::cout << "real range: ";
-    for(const auto& v : range(1.2, 4.5)) std::cout << v << " ";
+    for(const auto& v : range(1.2, 5.2)) std::cout << v << " ";
     std::cout << "\n";
 
     std::cout << "negative real range, with stepping: ";
