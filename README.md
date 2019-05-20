@@ -42,7 +42,8 @@ int main() {
     std::cout << "\n";
 
     std::cout << "real range: ";
-    for(const auto& v : range(1.2, 4.5)) std::cout << v << " ";
+    // a real range's end value is inclusive
+    for(const auto& v : range(1.2, 5.2)) std::cout << v << " ";
     std::cout << "\n";
 
     std::cout << "negative real range, with stepping: ";
@@ -63,7 +64,7 @@ Output
 
     integral range: 0 1 2 3 4 5 6 7 8 9
     negative integral range: 0 -1 -2 -3 -4 -5 -6 -7 -8 -9
-    real range: 1.2 2.2 3.2 4.2
+    real range: 1.2 2.2 3.2 4.2 5.2
     negative real range, with stepping: -1.2 -2.3 -3.4
     iterator hi-jacking with stepping: 4 6 8 10
     a range as an argument to a function: -10 -7 -4 -1 2 5 8
